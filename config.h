@@ -38,8 +38,6 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
 /* layout(s) */
@@ -90,9 +88,9 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_space,	zoom,		{0} },
 	{ MODKEY,                       XK_0,		view,		{0} },
 	{ MODKEY|ShiftMask,             XK_q,		killclient,	{0} },
-	{ MODKEY,                       XK_t,		setlayout,	{.v = &layouts[0]} },
+	{ MODKEY,                       XK_y,		setlayout,	{.v = &layouts[0]} },
 	{ MODKEY|ShiftMask,		XK_f,		setlayout,	{.v = &layouts[1]} },
-	{ MODKEY|ShiftMask,		XK_t,		setlayout,	{.v = &layouts[2]} },
+	{ MODKEY|ShiftMask,		XK_y,		setlayout,	{.v = &layouts[2]} },
 	{ MODKEY,			XK_f,		togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,		view,		{.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
@@ -109,7 +107,7 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_l,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_p,      quit,           {0} },
 	{ MODKEY,                       XK_Down,   moveresize,     {.v = "0x 25y 0w 0h" } },
 	{ MODKEY,                       XK_Up,     moveresize,     {.v = "0x -25y 0w 0h" } },
 	{ MODKEY,                       XK_Right,  moveresize,     {.v = "25x 0y 0w 0h" } },
@@ -131,8 +129,9 @@ static const Key keys[] = {
 	{ MODKEY,			XK_m,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "ncmpcpp", NULL } } },
 	{ MODKEY|ShiftMask,		XK_m,		spawn,	{.v = (const char*[]){ TERMINAL, "-e", "pulsemixer", NULL } } },
 	{ MODKEY,			XK_r,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "lfub", NULL } } },
-	{ MODKEY|ShiftMask,		XK_r,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "htop", NULL } } },
+	{ MODKEY|ShiftMask,		XK_r,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "doas", "htop", NULL } } },
 	{ MODKEY,			XK_n,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "nvim", "-c", "VimwikiIndex", NULL } } },
+	{ MODKEY,			XK_t,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "stig", NULL } } },
 	{ MODKEY|ShiftMask,		XK_n,		spawn,	{.v = (const char*[]){ TERMINAL, "-e", "newsboat", NULL } } },
 	{ MODKEY,			XK_Insert,	spawn,		SHCMD("xdotool type $(grep -v '^#' ~/.local/bin/bookmarks | dmenu -i -l 50 | cut -d' ' -f1)") },
 	{ MODKEY, 			XK_F5,		spawn,		SHCMD("setxkbmap us") },
