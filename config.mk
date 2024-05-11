@@ -7,6 +7,7 @@ VERSION = 6.5
 PREFIX = /usr/local
 MANPREFIX = ${PREFIX}/share/man
 
+# For FreeBSD replace X11R6 with local
 X11INC = /usr/X11R6/include
 X11LIB = /usr/X11R6/lib
 

@@ -72,6 +72,8 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
+#define STATUSBAR "dwmblocks"
+
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
@@ -118,8 +120,8 @@ static const Key keys[] = {
 	{ 0,				XK_Print,	spawn,		{.v = (const char*[]){ "maimpick", NULL } } },	
 	{ MODKEY,			XK_w,		spawn,		{.v = (const char*[]){ BROWSER, NULL } } },
 	{ MODKEY,			XK_m,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "ncmpcpp", NULL } } },
-	{ MODKEY|ShiftMask,		XK_m,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "alsamixer", NULL } } },
-	{ MODKEY,			XK_r,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "lfub", NULL } } },
+	{ MODKEY|ShiftMask,		XK_m,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "alsamixer; kill -39 $(pidof dwmblocks)", NULL } } },
+	{ MODKEY,			XK_r,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "yazi", NULL } } },
 	{ MODKEY|ShiftMask,		XK_r,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "btop", NULL } } },
 	{ MODKEY,			XK_n,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "nvim", "-c", "VimwikiIndex", NULL } } },
 	{ MODKEY,			XK_t,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "stig", NULL } } },
@@ -129,10 +131,12 @@ static const Key keys[] = {
 	{ MODKEY, 			XK_F6,		spawn,		SHCMD("setxkbmap lv") },
 	{ MODKEY, 			XK_F7,		spawn,		SHCMD("setxkbmap ru") },
 	{ MODKEY,			XK_p,		spawn,		SHCMD("slock") },
-	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("amixer -q set Master toggle") },
-	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("amixer -q set Master 5%+ unmute") },
-	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("amixer -q set Master 5%- unmute") },
-	{ 0, XF86XK_AudioMicMute,	spawn,		SHCMD("amixer -q set Capture toggle") },
+	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("amixer -q set Master toggle; kill -39 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("amixer -q set Master 5%+ unmute; kill -39 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("amixer -q set Master 5%- unmute; kill -39 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioMicMute,	spawn,		SHCMD("amixer set Capture toggle; kill -39 $(pidof dwmblocks)") },
+	{ 0, XF86XK_MonBrightnessUp,	spawn,		SHCMD("brillo -qA 5") },
+	{ 0, XF86XK_MonBrightnessDown,	spawn,		SHCMD("brillo -qU 5") },
 };
 
 /* button definitions */
@@ -142,7 +146,11 @@ static const Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+	{ ClkStatusText,        0,              Button1,        sigstatusbar,   {.i = 1} },
+	{ ClkStatusText,        0,              Button2,        sigstatusbar,   {.i = 2} },
+	{ ClkStatusText,        0,              Button3,        sigstatusbar,   {.i = 3} },
+	{ ClkStatusText,        0,              Button4,        sigstatusbar,   {.i = 4} },
+	{ ClkStatusText,        0,              Button5,        sigstatusbar,   {.i = 5} },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
